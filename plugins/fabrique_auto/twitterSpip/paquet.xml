@@ -1,0 +1,43 @@
+<paquet
+	prefix="twitterSpip"
+	categorie="communication"
+	version="1.0.0"
+	etat="dev"
+	compatibilite="[3.0.5;3.0.*]"
+	logo="prive/themes/spip/images/twitterSpip-64.png"
+	documentation=""
+>
+	<!--
+		Paquet généré le 2013-01-23 17:16:26
+		(Vous pouvez bien entendu supprimer ces commentaires) 
+	-->
+
+	<nom>Twitter pour Spip</nom>
+
+	<!-- cette balise peut être présente plusieurs fois s'il y a plusieurs auteurs --> 
+	<auteur lien='http://p.henix.be'>Didier Debondt</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<!--
+		Exemple de commandes
+		* dependances
+		<necessite nom="saisies" compatibilite="[1.21.0;]" />
+		<utilise nom="saisies" compatibilite="[1.21.0;]" />
+		<lib nom="simplehtmldom" lien="http://chemin_vers_archive.zip" />
+		* pipelines
+		<pipeline nom="autoriser" inclure="twitterSpip_autorisations.php" />
+		<pipeline nom="insert_head" inclure="twitterSpip_pipelines.php" />
+		* declarer un pipeline 
+		<pipeline nom="mon_pipeline" action="" />
+		* parents de menus de SPIP :
+				menu_accueil (à éviter), menu_edition, menu_publication,
+				menu_activite, menu_squelette, menu_administration, menu_configuration 
+		<menu nom="twitterSpip" titre="twitterSpip:twitterSpip_titre" parent="menu_edition"  icone="images/twitterSpip-16.png" />
+		* parents d'onglets... configuration, plugins, statistiques, ... 
+		<onglet nom="twitterSpip" titre="twitterSpip:twitterSpip_titre" parent="configuration" icone="images/twitterSpip-24.png" />
+	-->
+
+	<chemin path="squelettes" type='public'/>
+
+</paquet>

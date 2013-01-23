@@ -1,0 +1,12 @@
+<h2 class="twitterBoard-title">Twitter <a href="https://twitter.com/#!/Phenix" title="Suivez-moi sur Twitter" target="_blank">@phenix</a></h2>
+<B_TwitterFeed>
+<ul class="twitterBoard">
+	<BOUCLE_TwitterFeed(DATA){source rss, https://api.twitter.com/1/statuses/user_timeline.rss?screen_name=Phenix} {0,5}>
+	<li>
+		[(#VALEUR{titre}|twitter_parse)]
+		[<span class="twitterBoard-info"><a href="https://twitter.com/#!/Phenix" title="Suivez-moi sur Twitter" target="_blank">@Phenix</a> le <a href="(#VALEUR{url})">[(#VAL{d M Y, H:i:s}|date{#VALEUR{date}})]</a>]
+	</li>
+	</BOUCLE_TwitterFeed>
+</ul>
+</B_TwitterFeed>
+<//B_TwitterFeed>
