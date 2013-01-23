@@ -1,0 +1,34 @@
+[(#SET{defaut_tri,#ARRAY{
+	titre,1, 
+	id_slideshow,1,
+	points,-1
+}})]<B_liste_slideshows>
+#ANCRE_PAGINATION
+<div class="liste-objets slideshows">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{slideshow:info_1_slideshow,slideshow:info_nb_slideshows}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='picto' scope='col'></th>
+			<th class='titre' scope='col'>[(#TRI{titre,<:slideshow:label_titre:>,ajax})]</th>
+			<th class='id' scope='col'>[(#TRI{id_slideshow,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_slideshows(SLIDESHOWS){id_mot?}{id_auteur?}{where?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='picto'>[(#CHEMIN_IMAGE{slideshow-16.png}|balise_img)]</td>
+			<td class='titre principale'>[(#LOGO_SLIDESHOW|image_reduire{20,26})]<a href="[(#ID_SLIDESHOW|generer_url_entite{slideshow})]" title="<:info_numero_abbreviation|attribut_html:> #ID_SLIDESHOW">[(#RANG). ]#TITRE</a></td>
+			<td class='id'>[(#AUTORISER{modifier,slideshow,#ID_SLIDESHOW}|?{
+				<a href="[(#URL_ECRIRE{slideshow_edit,id_slideshow=#ID_SLIDESHOW})]">#ID_SLIDESHOW</a>,
+				#ID_SLIDESHOW
+			})]</td>
+		</tr>
+	</BOUCLE_liste_slideshows>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_slideshows>[
+<div class="liste-objets slideshows caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_slideshows>

@@ -1,0 +1,128 @@
+<div class="formulaire_spip formulaire_configurer formulaire_#FORM">
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+	
+	<form method="post" action="#ENV{action}">
+	<div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		
+		<h3 class="titrem">Option des Slides</h3>
+		
+		<ul>
+			[(#SAISIE{selection, effet,
+				label=Effet,
+				explication=Effet de transition, obligatoire=oui, cacher_option_intro=oui,
+				datas=#ARRAY{
+							random,random,
+						    strip-down-right, strip-down-right,
+						    strip-down-left, strip-down-left,
+						    strip-up-right, strip-up-right,
+						    strip-up-left, strip-up-left,
+						    strip-up-down, strip-up-down,
+						    strip-up-down-left, strip-up-down-left,
+						    strip-left-right, strip-left-right,
+						    strip-left-right-down, strip-left-right-down,
+						    slide-in-right, slide-in-right,
+						    slide-in-left, slide-in-left,
+						    slide-in-up, slide-in-up,
+						    slide-in-down, slide-in-down,
+						    left-curtain, left-curtain,
+						    right-curtain, right-curtain,
+						    top-curtain, top-curtain,
+						    bottom-curtain, bottom-curtain,
+						    fade, fade,
+						    block-random, block-random,
+						    block-fade, block-fade,
+						    block-fade-reverse, block-fade-reverse,
+						    block-expand, block-expand,
+						    block-expand-reverse, block-expand-reverse,
+						    block-expand-random, block-expand-random,
+						    block-drop-random, block-drop-random,
+						    zigzag-top, zigzag-top,
+						    zigzag-bottom, zigzag-bottom,
+						    zigzag-grow-top, zigzag-grow-top,
+						    zigzag-grow-bottom, zigzag-grow-bottom,
+						    zigzag-drop-top, zigzag-drop-top,
+						    zigzag-drop-bottom, zigzag-drop-bottom,
+						    strip-left-fade, strip-left-fade,
+						    strip-right-fade, strip-right-fade,
+						    strip-top-fade, strip-top-fade,
+						    strip-bottom-fade, strip-bottom-fade}})]
+			
+			[(#SAISIE{input, vitesse, label=Vitesse d'animation, explication=Vitesse de l'animation en milliseconde})]
+			
+			[(#SAISIE{input, pause, label=Temps de pause, explication=pause entre les animations en milliseconde})]
+		</ul>
+		
+		<h3 class="titrem">Option de navigation</h3>
+		
+		<ul>	
+			[(#SAISIE{true_false, direction_nav, label=Suivant/Précédent, explication=Indique si vous voulez ajouté des liens suivant/précédent})]
+			
+			[(#SAISIE{true_false, control_nav, label=Controle de navigation, explication=Indique si vous voulez ajouté des bulles de navigation})]
+			
+			[(#SAISIE{input, controlNavHoverOpacity, label=Opacité de la navigation au survol, explication=Opacité CSS})]
+			
+			[(#SAISIE{true_false, controlNavNextPrev, label=Flèche de navigation, explication=Ajoute des flèche de navigation à la liste à bulle})]
+			
+			[(#SAISIE{true_false, controlNavTooltip, label=Afficher les miniatures, explication=Affiche les miniatures au survole des bulles.})]
+			
+		</ul>
+		
+		<h3 class="titrem">Option des descriptifs</h3>
+		
+		<ul>
+			[(#SAISIE{selection, effet_caption, label=Effect d'apparition, explication=Effect d'apparition de la description, cacher_option_intro=oui, obligatoire=oui,
+			datas=#ARRAY{
+				wipeLeft, wipeLeft,
+				wipeRight, wipeRight,
+				wipeTop, wipeTop,
+				wipeBottom,wipeBottom,
+				expandLeft,expandLeft,
+				expandRight,expandRight,
+				expandTop,expandTop,
+				expandBottom,expandBottom,
+				fade,fade}})]
+			
+			[(#SAISIE{input, vitesse_caption, label=Vitesse d'animation, explication=Vitesse de l'animation en milliseconde})]
+			
+			[(#SAISIE{input, opacite_caption, label=Opacite, explication=Opacité CSS de la boite})]
+			
+			[(#SAISIE{input, posX_caption, label=Position X, explication=Position X du descriptif dans la boite})]
+			
+			[(#SAISIE{input, posY_caption, label=Position Y, explication=Position Y du descriptif dans la boite})]
+		</ul>
+
+		<h3 class="titrem">Option du Timer</h3>
+		<ul>
+			[(#SAISIE{selection, timer,
+				label=Timer,
+				explication=Type de Timer, obligatoire=oui, cacher_option_intro=oui,
+				datas=#ARRAY{
+							pie,pie,
+							360Bar,360Bar,
+							Bar,Bar
+							}})]
+			
+			[(#SAISIE{input, timerX, label=Position X du timer})]
+			
+			[(#SAISIE{input, timerY, label=Position Y du timer})]
+			
+			[(#SAISIE{couleur, timerColor, label=Couleur du timer})]
+			
+			[(#SAISIE{input, timerOpacity, label=Opacité CSS du timer})]
+			
+			[(#SAISIE{input, timerDiameter, label=Diamètre du timer, explication=Gère la taille du timer en général})]
+			
+			[(#SAISIE{input, timerPadding, label=Padding du timer})]
+			
+			[(#SAISIE{input, timerStroke, label=Epaisseur de la ligne du timer})]
+			
+			[(#SAISIE{couleur, timerBarStrokeColor, label=Couleur de la bordure du Timer})]
+		</ul>
+		
+		<input type="hidden" name="_meta_casier" value="iview" />
+		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
+	</div>
+	</form>
+</div>

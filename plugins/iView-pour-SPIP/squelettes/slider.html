@@ -1,0 +1,12 @@
+[(#REM) Ce fichier gère l'affichage du slider, il suffit de le surcharger dans le dossier squelette ]
+<B_iviewSlider>
+	<div id="iview">    
+		<BOUCLE_iviewSlider(SLIDES){id_slideshow}>
+			<div data-iview:image="[(#LOGO_SLIDE|image_reduire{900}|extraire_attribut{src})]">
+				[<div class="iview-caption" data-x="#CONFIG{iview/posX_caption}" data-y="#CONFIG{iview/posX_caption}" data-transition="#CONFIG{iview/effet_caption}">(#DESCRIPTIF)</div>]
+			</div>
+		</BOUCLE_iviewSlider>
+	</div>
+</B_iviewSlider>
+Il n'y a aucune image pour ce slideshow
+<//B_iviewSlider>
