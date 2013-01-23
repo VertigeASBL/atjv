@@ -1,10 +1,10 @@
 <paquet
-	prefix="twitterSpip"
+	prefix="twitterspip"
 	categorie="communication"
 	version="1.0.0"
 	etat="dev"
 	compatibilite="[3.0.5;3.0.*]"
-	logo="prive/themes/spip/images/twitterSpip-64.png"
+	logo="prive/themes/spip/images/twitterspip-64.png"
 	documentation=""
 >
 	<!--
@@ -37,7 +37,7 @@
 		* parents d'onglets... configuration, plugins, statistiques, ... 
 		<onglet nom="twitterSpip" titre="twitterSpip:twitterSpip_titre" parent="configuration" icone="images/twitterSpip-24.png" />
 	-->
-
+	<chemin path="./" />
 	<chemin path="squelettes" type='public'/>
 
 </paquet>

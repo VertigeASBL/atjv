@@ -6,13 +6,13 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// T
-	'twitterSpip_titre' => 'Twitter pour Spip',
+	'twitterspip_titre' => 'Twitter pour Spip',
 
 	// C
 	'cfg_exemple' => 'Exemple',
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
-	'titre_page_configurer_twitterSpip' => 'Configuration de Twitter pour spip',
+	'titre_page_configurer_twitterspip' => 'Configuration de Twitter pour spip',
 );
 
 ?>
