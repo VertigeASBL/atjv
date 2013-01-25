@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2013-01-25 15:28:49
+ *   le 2013-01-25 15:58:46
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -283,7 +283,7 @@ $data = array (
       ),
       'champ_titre' => 'titre',
       'champ_date' => '',
-      'statut' => '',
+      'statut' => 'on',
       'chaines' => 
       array (
         'titre_objets' => 'Spectacles',
@@ -305,6 +305,10 @@ $data = array (
         'texte_changer_statut_objet' => 'Ce spectacle est :',
       ),
       'table_liens' => '',
+      'vue_liens' => 
+      array (
+        0 => 'spip_evenements',
+      ),
       'roles' => '',
       'auteurs_liens' => '',
       'vue_auteurs_liens' => '',

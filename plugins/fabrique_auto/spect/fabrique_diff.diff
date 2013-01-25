@@ -1,58 +1,46 @@
-diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/base/spect.php ../plugins/fabrique_auto/spect/base/spect.php
-37c37
-< 			"debat_debut"        => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
----
-> 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
-52,54c52,54
-< 		'champs_editables'  => array('titre', 'auteur_spect', 'metteur_en_scene', 'type_de_spectacle', 'style', 'debat_debut', 'date_fin', 'lieu', 'description', 'reserve_1', 'reserve_2', 'reserve_3', 'reserve_4'),
-< 		'champs_versionnes' => array('titre', 'auteur_spect', 'metteur_en_scene', 'type_de_spectacle', 'style', 'debat_debut', 'date_fin', 'lieu', 'description', 'reserve_1', 'reserve_2', 'reserve_3', 'reserve_4'),
-< 		'rechercher_champs' => array("titre" => 8, "auteur_spect" => 6, "metteur_en_scene" => 6, "type_de_spectacle" => 6, "debat_debut" => 6, "date_fin" => 6, "description" => 6),
----
-> 		'champs_editables'  => array('titre', 'auteur_spect', 'metteur_en_scene', 'type_de_spectacle', 'style', 'date_debut', 'date_fin', 'lieu', 'description', 'reserve_1', 'reserve_2', 'reserve_3', 'reserve_4'),
-> 		'champs_versionnes' => array('titre', 'auteur_spect', 'metteur_en_scene', 'type_de_spectacle', 'style', 'date_debut', 'date_fin', 'lieu', 'description', 'reserve_1', 'reserve_2', 'reserve_3', 'reserve_4'),
-> 		'rechercher_champs' => array("titre" => 8, "auteur_spect" => 6, "metteur_en_scene" => 6, "type_de_spectacle" => 6, "date_debut" => 6, "date_fin" => 6, "description" => 6),
-diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/formulaires/editer_spectacle.html ../plugins/fabrique_auto/spect/formulaires/editer_spectacle.html
-26,27c26,27
-< 			[(#SAISIE{date, debat_debut,
-< 				label=<:spectacle:label_debat_debut:>})]
----
-> 			[(#SAISIE{date, date_debut,
-> 				label=<:spectacle:label_date_debut:>})]
 diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/formulaires/editer_spectacle.php ../plugins/fabrique_auto/spect/formulaires/editer_spectacle.php
-32,34d31
-<
-<
-<
-38,47d34
-< function formulaires_editer_mon_objet_verifier_dist($id_mon_objet='new', $id_rubrique=0, $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-< 	include_spip('prive/formulaires/dater');
-<
-< 	$date_debut = dater_recuperer_date_saisie(_request('date_debut'));
-< 	set_request('date_debut',sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], '00', '00'));
-<
-< 	return formulaires_editer_objet_verifier('mon_objet',$id_mon_objet, array('titre', 'date_edition'));
-< }
-<
-<
-53a41,42
+16,17c16,17
+< function formulaires_editer_spectacle_identifier_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+< 	return serialize(array(intval($id_spectacle)));
+---
+> function formulaires_editer_spectacle_identifier_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+> 	return serialize(array(intval($id_spectacle), $associer_objet));
+23c23
+< function formulaires_editer_spectacle_charger_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+---
+> function formulaires_editer_spectacle_charger_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+31c31
+< function formulaires_editer_spectacle_verifier_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+---
+> function formulaires_editer_spectacle_verifier_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+38,39c38,54
+< function formulaires_editer_spectacle_traiter_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+< 	return formulaires_editer_objet_traiter('spectacle',$id_spectacle,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+---
+> function formulaires_editer_spectacle_traiter_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+> 	$res = formulaires_editer_objet_traiter('spectacle',$id_spectacle,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 >
+> 	// Un lien a prendre en compte ?
+> 	if ($associer_objet AND $id_spectacle = $res['id_spectacle']) {
+> 		list($objet, $id_objet) = explode('|', $associer_objet);
 >
-diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/lang/spectacle_fr.php ../plugins/fabrique_auto/spect/lang/spectacle_fr.php
-21a22
-> 	'label_date_debut' => 'Date de début',
-23d23
-< 	'label_debat_debut' => 'Date de début',
+> 		if ($objet AND $id_objet AND autoriser('modifier', $objet, $id_objet)) {
+> 			include_spip('action/editer_liens');
+> 			objet_associer(array('spectacle' => $id_spectacle), array($objet => $id_objet));
+> 			if (isset($res['redirect'])) {
+> 				$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_spectacle, '&');
+> 			}
+> 		}
+> 	}
+> 	return $res;
+>
 diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/paquet.xml ../plugins/fabrique_auto/spect/paquet.xml
 12c12
-< 		Paquet généré le 2013-01-25 14:56:37
+< 		Paquet généré le 2013-01-25 15:58:36
 ---
-> 		Paquet généré le 2013-01-25 15:28:49
-diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/prive/objets/contenu/spectacle.html ../plugins/fabrique_auto/spect/prive/objets/contenu/spectacle.html
-28,30c28,30
-< [<div class="champ contenu_debat_debut[ (#DEBAT_DEBUT*|strlen|?{'',vide})]">
-< 	<label><:spectacle:label_debat_debut:> : </label>
-< 	<span dir='#LANG_DIR' class='#EDIT{debat_debut} debat_debut'>(#DEBAT_DEBUT)</span>
----
-> [<div class="champ contenu_date_debut[ (#DATE_DEBUT*|strlen|?{'',vide})]">
-> 	<label><:spectacle:label_date_debut:> : </label>
-> 	<span dir='#LANG_DIR' class='#EDIT{date_debut} date_debut'>(#DATE_DEBUT)</span>
+> 		Paquet généré le 2013-01-25 15:58:46
+Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_associer.html
+Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_associer_fonctions.php
+Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_lies.html
+Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_lies_fonctions.php
+Only in ../plugins/fabrique_auto/spect/prive/squelettes/contenu: spectacle_edit.html
