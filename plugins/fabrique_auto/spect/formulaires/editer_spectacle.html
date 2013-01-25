@@ -1,0 +1,57 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_spectacle,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_spectacle' value='#ENV{id_spectacle}' />
+		<ul>
+
+			[(#SAISIE{input, titre, obligatoire=oui,
+				label=<:spectacle:label_titre:>})]
+
+			[(#SAISIE{input, auteur_spect,
+				label=<:spectacle:label_auteur_spect:>})]
+
+			[(#SAISIE{input, metteur_en_scene,
+				label=<:spectacle:label_metteur_en_scene:>})]
+
+			[(#SAISIE{input, type_de_spectacle,
+				label=<:spectacle:label_type_de_spectacle:>})]
+
+			[(#SAISIE{input, style,
+				label=<:spectacle:label_style:>})]
+
+			[(#SAISIE{date, date_debut,
+				label=<:spectacle:label_date_debut:>})]
+
+			[(#SAISIE{date, date_fin,
+				label=<:spectacle:label_date_fin:>})]
+
+			[(#SAISIE{input, lieu,
+				label=<:spectacle:label_lieu:>})]
+
+			[(#SAISIE{textarea, description,
+				label=<:spectacle:label_description:>,
+				li_class=haut, class=inserer_barre_edition, rows=15})]
+
+			[(#SAISIE{input, reserve_1,
+				label=<:spectacle:label_reserve_1:>})]
+
+			[(#SAISIE{input, reserve_2,
+				label=<:spectacle:label_reserve_2:>})]
+
+			[(#SAISIE{input, reserve_3,
+				label=<:spectacle:label_reserve_3:>})]
+
+			[(#SAISIE{input, reserve_4,
+				label=<:spectacle:label_reserve_4:>})]
+
+		</ul>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

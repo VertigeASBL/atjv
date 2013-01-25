@@ -1,0 +1,51 @@
+<paquet
+	prefix="spect"
+	categorie="date"
+	version="1.0.0"
+	etat="dev"
+	compatibilite="[3.0.5;3.0.*]"
+	logo="prive/themes/spip/images/spect-64.png"
+	documentation=""
+	schema="1.0.0" 
+>
+	<!--
+		Paquet généré le 2013-01-25 15:28:49
+		(Vous pouvez bien entendu supprimer ces commentaires) 
+	-->
+
+	<nom>Spectacle</nom>
+
+	<!-- cette balise peut être présente plusieurs fois s'il y a plusieurs auteurs --> 
+	<auteur lien='http://www.vertige.org'>Didier</auteur>
+
+	<licence>GNU/GPL</licence>
+
+	<!--
+		Exemple de commandes
+		* dependances
+		<necessite nom="saisies" compatibilite="[1.21.0;]" />
+		<utilise nom="saisies" compatibilite="[1.21.0;]" />
+		<lib nom="simplehtmldom" lien="http://chemin_vers_archive.zip" />
+		* pipelines
+		<pipeline nom="autoriser" inclure="spect_autorisations.php" />
+		<pipeline nom="insert_head" inclure="spect_pipelines.php" />
+		* declarer un pipeline 
+		<pipeline nom="mon_pipeline" action="" />
+		* parents de menus de SPIP :
+				menu_accueil (à éviter), menu_edition, menu_publication,
+				menu_activite, menu_squelette, menu_administration, menu_configuration 
+		<menu nom="spect" titre="spect:spect_titre" parent="menu_edition"  icone="images/spect-16.png" />
+		* parents d'onglets... configuration, plugins, statistiques, ... 
+		<onglet nom="spect" titre="spect:spect_titre" parent="configuration" icone="images/spect-24.png" />
+	-->
+
+	<necessite nom="saisies" compatibilite="[1.24.0;]" /> 
+
+	<pipeline nom="autoriser" inclure="spect_autorisations.php" /> 
+
+	<pipeline nom="declarer_tables_objets_sql" inclure="base/spect.php" /> 
+	<pipeline nom="declarer_tables_interfaces" inclure="base/spect.php" /> 
+
+	<menu nom="spectacles" titre="spectacle:titre_spectacles" parent="menu_edition" icone="images/spectacle-16.png" action="spectacles" /> 
+	<menu nom="spectacle_creer" titre="spectacle:icone_creer_spectacle" parent="outils_rapides" icone="images/spectacle-new-16.png" action="spectacle_edit" parametres="new=oui" /> 
+</paquet>
