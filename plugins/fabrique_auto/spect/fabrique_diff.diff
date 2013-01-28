@@ -1,46 +1,152 @@
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/base/spect.php ../plugins/fabrique_auto/spect/base/spect.php
+17d16
+< 	$interfaces['table_des_traitements']['DESCRIPTION']['spectacles'] = "safehtml(".str_replace("%s","interdit_html(%s)",_TRAITEMENT_RACCOURCIS).")";
+58c57
+< 		'tables_jointures'  => array(),
+---
+> 		'tables_jointures'  => array('spip_spectacles_liens'),
+83a83,103
+> /**
+>  * Déclaration des tables secondaires (liaisons)
+>  */
+> function spect_declarer_tables_auxiliaires($tables) {
+>
+> 	$tables['spip_spectacles_liens'] = array(
+> 		'field' => array(
+> 			"id_spectacle"       => "bigint(21) DEFAULT '0' NOT NULL",
+> 			"id_objet"           => "bigint(21) DEFAULT '0' NOT NULL",
+> 			"objet"              => "VARCHAR(25) DEFAULT '' NOT NULL",
+> 			"vu"                 => "VARCHAR(6) DEFAULT 'non' NOT NULL"
+> 		),
+> 		'key' => array(
+> 			"PRIMARY KEY"        => "id_spectacle,id_objet,objet",
+> 			"KEY id_spectacle"   => "id_spectacle"
+> 		)
+> 	);
+>
+> 	return $tables;
+> }
+>
+Only in ../plugins/fabrique_auto/.backup/spect/formulaires: .DS_Store
+Only in ../plugins/fabrique_auto/.backup/spect/formulaires: editer_evenement.html
+Only in ../plugins/fabrique_auto/.backup/spect/formulaires: editer_evenement.php
 diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/formulaires/editer_spectacle.php ../plugins/fabrique_auto/spect/formulaires/editer_spectacle.php
-16,17c16,17
-< function formulaires_editer_spectacle_identifier_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-< 	return serialize(array(intval($id_spectacle)));
----
-> function formulaires_editer_spectacle_identifier_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-> 	return serialize(array(intval($id_spectacle), $associer_objet));
-23c23
-< function formulaires_editer_spectacle_charger_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
----
-> function formulaires_editer_spectacle_charger_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-31c31
-< function formulaires_editer_spectacle_verifier_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
----
-> function formulaires_editer_spectacle_verifier_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-38,39c38,54
-< function formulaires_editer_spectacle_traiter_dist($id_spectacle='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-< 	return formulaires_editer_objet_traiter('spectacle',$id_spectacle,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
----
-> function formulaires_editer_spectacle_traiter_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-> 	$res = formulaires_editer_objet_traiter('spectacle',$id_spectacle,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
->
-> 	// Un lien a prendre en compte ?
-> 	if ($associer_objet AND $id_spectacle = $res['id_spectacle']) {
-> 		list($objet, $id_objet) = explode('|', $associer_objet);
->
-> 		if ($objet AND $id_objet AND autoriser('modifier', $objet, $id_objet)) {
-> 			include_spip('action/editer_liens');
-> 			objet_associer(array('spectacle' => $id_spectacle), array($objet => $id_objet));
-> 			if (isset($res['redirect'])) {
-> 				$res['redirect'] = parametre_url ($res['redirect'], "id_lien_ajoute", $id_spectacle, '&');
-> 			}
-> 		}
-> 	}
-> 	return $res;
->
+32,40d31
+<
+< 	include_spip('prive/formulaires/dater');
+< 	$date_debut = dater_recuperer_date_saisie(_request('date_debut'));
+< 	set_request('date_debut',sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], '00', '00'));
+<
+< 	$date_fin = dater_recuperer_date_saisie(_request('date_fin'));
+< 	set_request('date_fin',sql_format_date($date_fin[0], $date_fin[1], $date_fin[2], '00', '00'));
+<
+<
 diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/paquet.xml ../plugins/fabrique_auto/spect/paquet.xml
 12c12
-< 		Paquet généré le 2013-01-25 15:58:36
+< 		Paquet généré le 2013-01-25 15:58:46
 ---
-> 		Paquet généré le 2013-01-25 15:58:46
-Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_associer.html
-Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_associer_fonctions.php
-Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_lies.html
-Only in ../plugins/fabrique_auto/spect/prive/objets/liste: spectacles_lies_fonctions.php
-Only in ../plugins/fabrique_auto/spect/prive/squelettes/contenu: spectacle_edit.html
+> 		Paquet généré le 2013-01-28 17:30:35
+47a48,50
+> 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/spect.php" />
+> 	<pipeline nom="affiche_milieu" inclure="spect_pipelines.php" />
+> 	<pipeline nom="optimiser_base_disparus" inclure="spect_pipelines.php" />
+51,53d53
+<
+< 	<!-- Ajout de jQuery UI -->
+< 	<pipeline nom="jqueryui_plugins" inclure="spect_pipelines.php" />
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/prive/squelettes/contenu/spectacle_edit.html ../plugins/fabrique_auto/spect/prive/squelettes/contenu/spectacle_edit.html
+5a6,8
+>
+> #SET{redirect,#ENV{redirect}|sinon{#ID_SPECTACLE|?{#ID_SPECTACLE|generer_url_entite{spectacle},#URL_ECRIRE{spectacles}}}}
+>
+7a11,13
+> 	[(#ID_SPECTACLE|oui)
+> 	[(#GET{redirect}|icone_verticale{Retour,spectacle,'',left retour[(#ENV{retourajax,''}|oui)ajax preload]})]
+> 	]
+12a19,22
+>
+> #SET{redirect,#ENV{redirect,#ID_SPECTACLE|generer_url_entite{spectacle}}}
+> [(#ENV{retourajax,''}|oui)
+> 	#SET{redirect,'javascript:if (window.jQuery) jQuery(".entete-formulaire .retour a").followLink();'}
+14c24,26
+< 		[(#FORMULAIRE_EDITER_SPECTACLE{#ENV{id_spectacle,oui}, #ENV{associer_objet}})]
+---
+> ]
+> 		[(#FORMULAIRE_EDITER_SPECTACLE{#ENV{id_spectacle,oui}, #GET{redirect}, #ENV{associer_objet}})]
+> [(#ENV{retourajax,''}|oui)
+15a28,29
+> 	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('#ENV{exec}');/*\]\]>*/</script>
+> ]
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/spect_administrations.php ../plugins/fabrique_auto/spect/spect_administrations.php
+40c40
+< 	$maj['create'] = array(array('maj_tables', array('spip_spectacles')));
+---
+> 	$maj['create'] = array(array('maj_tables', array('spip_spectacles', 'spip_spectacles_liens')));
+59a60
+> 	sql_drop_table("spip_spectacles_liens");
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/spect_autorisations.php ../plugins/fabrique_auto/spect/spect_autorisations.php
+65a66,69
+> // associer (lier / delier)
+> function autoriser_associerspectacles_dist($faire, $type, $id, $qui, $opt) {
+> 	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+> }
+diff -r -x . -x .. -x fabrique_diff.diff -x fabrique_spect.php ../plugins/fabrique_auto/.backup/spect/spect_pipelines.php ../plugins/fabrique_auto/spect/spect_pipelines.php
+10,14c10,45
+< /* Pipeline de jQuery UI */
+< function spect_jqueryui_plugins($scripts){
+< 	/*On ajoute l'autocomplete de jQuery UI*/
+< 	$scripts[] = "jquery.ui.autocomplete";
+< 	return $scripts;
+---
+>
+> /*
+>  * Un fichier de pipelines permet de regrouper
+>  * les fonctions de branchement de votre plugin
+>  * sur des pipelines existants.
+>  */
+>
+>
+>
+> /**
+>  * Ajout de contenu sur certaines pages,
+>  * notamment des formulaires de liaisons entre objets
+>  */
+> function spect_affiche_milieu($flux) {
+> 	$texte = "";
+> 	$e = trouver_objet_exec($flux['args']['exec']);
+>
+>
+>
+> 	// spectacles sur les evenements
+> 	if (!$e['edition'] AND in_array($e['type'], array('evenement'))) {
+> 		$texte .= recuperer_fond('prive/objets/editer/liens', array(
+> 			'table_source' => 'spectacles',
+> 			'objet' => $e['type'],
+> 			'id_objet' => $flux['args'][$e['id_table_objet']]
+> 		));
+> 	}
+>
+> 	if ($texte) {
+> 		if ($p=strpos($flux['data'],"<!--affiche_milieu-->"))
+> 			$flux['data'] = substr_replace($flux['data'],$texte,$p,0);
+> 		else
+> 			$flux['data'] .= $texte;
+> 	}
+>
+> 	return $flux;
+15a47,61
+>
+>
+> /**
+>  * Optimiser la base de donnees en supprimant les liens orphelins
+>  * de l'objet vers quelqu'un et de quelqu'un vers l'objet.
+>  *
+>  * @param int $n
+>  * @return int
+>  */
+> function spect_optimiser_base_disparus($flux){
+> 	include_spip('action/editer_liens');
+> 	$flux['data'] += objet_optimiser_liens(array('spectacle'=>'*'),'*');
+> 	return $flux;
+> }
+>

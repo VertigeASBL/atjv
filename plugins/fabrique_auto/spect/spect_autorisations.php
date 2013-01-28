@@ -63,6 +63,10 @@ function autoriser_spectacle_supprimer_dist($faire, $type, $id, $qui, $opt) {
 }
 
 
+// associer (lier / delier)
+function autoriser_associerspectacles_dist($faire, $type, $id, $qui, $opt) {
+	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+}
 
 
 ?>

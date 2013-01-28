@@ -37,7 +37,7 @@ function spect_upgrade($nom_meta_base_version, $version_cible) {
 	# );
 	# ...
 
-	$maj['create'] = array(array('maj_tables', array('spip_spectacles')));
+	$maj['create'] = array(array('maj_tables', array('spip_spectacles', 'spip_spectacles_liens')));
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
@@ -57,6 +57,7 @@ function spect_vider_tables($nom_meta_base_version) {
 	# sql_drop_table("spip_xx_liens");
 
 	sql_drop_table("spip_spectacles");
+	sql_drop_table("spip_spectacles_liens");
 
 	# Nettoyer les versionnages et forums
 	sql_delete("spip_versions",              sql_in("objet", array('spectacle')));

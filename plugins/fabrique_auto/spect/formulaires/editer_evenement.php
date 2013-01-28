@@ -15,6 +15,8 @@ include_spip('inc/autoriser');
 
 function formulaires_editer_evenement_charger_dist($id_evenement='new', $id_article=0, $retour='', $lier_trad = 0, $config_fonc='evenements_edit_config', $row=array(), $hidden=''){
 
+	$id_article = 1;
+
 	$valeurs = formulaires_editer_objet_charger('evenement',$id_evenement,$id_article,0,$retour,$config_fonc,$row,$hidden);
 
 	if (!$valeurs['id_article'])
@@ -73,8 +75,10 @@ function evenements_edit_config(){
 }
 
 function formulaires_editer_evenement_verifier_dist($id_evenement='new', $id_article=0, $retour='', $lier_trad = 0, $config_fonc='evenements_edit_config', $row=array(), $hidden=''){
-	$erreurs = formulaires_editer_objet_verifier('evenement',$id_evenement,array('titre','date_debut','date_fin'));
 
+	$id_article = 1;
+
+	$erreurs = formulaires_editer_objet_verifier('evenement',$id_evenement,array('titre','date_debut','date_fin'));
 	include_spip('inc/date_gestion');
 
 	$horaire = _request('horaire')=='non'?false:true;
@@ -84,10 +88,7 @@ function formulaires_editer_evenement_verifier_dist($id_evenement='new', $id_art
 	if ($date_debut AND $date_fin AND $date_fin<$date_debut)
 		$erreurs['date_fin'] = _T('agenda:erreur_date_avant_apres');
 
-
-	/* Didier => On supprime le système pour associer a un article, parce qu'on s'en fou on associe a un spactable. */
-
-	/*include_spip('formulaires/selecteur/selecteur_fonctions');
+	include_spip('formulaires/selecteur/selecteur_fonctions');
 	if (count($id = picker_selected(_request('parents_id'),'article'))
 	  AND $id = reset($id)
 	  AND $id = sql_getfetsel('id_article','spip_articles','id_article='.intval($id))){
@@ -95,12 +96,14 @@ function formulaires_editer_evenement_verifier_dist($id_evenement='new', $id_art
 	  set_request('id_parent',$id);
 	}
 
+	set_request('id_parent',$id_article);
+
 	if (!$id_parent = intval(_request('id_parent')))
 		$erreurs['id_parent'] = _T('agenda:erreur_article_manquant');
 	else {
 		if (!autoriser('creerevenementdans','article',$id_parent))
 			$erreurs['id_parent'] = _T('agenda:erreur_article_interdit');
-	}*/
+	}
 
 	#if (!count($erreurs))
 	#	$erreurs['message_erreur'] = 'ok?';
@@ -108,6 +111,8 @@ function formulaires_editer_evenement_verifier_dist($id_evenement='new', $id_art
 }
 
 function formulaires_editer_evenement_traiter_dist($id_evenement='new', $id_article=0, $retour='', $lier_trad = 0, $config_fonc='evenements_edit_config', $row=array(), $hidden=''){
+	$id_article = 1;
+
 	set_request('horaire',_request('horaire')=='non'?'non':'oui');
 	set_request('inscription',_request('inscription')?1:0);
 	include_spip('inc/date_gestion');
@@ -118,6 +123,7 @@ function formulaires_editer_evenement_traiter_dist($id_evenement='new', $id_arti
 	set_request('date_fin',date('Y-m-d H:i:s',$date_fin));
 
 	$res = formulaires_editer_objet_traiter('evenement',$id_evenement,$id_article,0,$retour,$config_fonc,$row,$hidden);
+
 	// si c'est une creation dans un article publie, passer l'evenement en publie
 	// l'article peut être renseigné/modifié par l'utilisateur dans le formulaire. On le retrouve.
 	if (!intval($id_evenement)

@@ -29,15 +29,12 @@ function formulaires_editer_spectacle_charger_dist($id_spectacle='new', $retour=
  * Verifier les champs postes et signaler d'eventuelles erreurs
  */
 function formulaires_editer_spectacle_verifier_dist($id_spectacle='new', $retour='', $associer_objet='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	
 	include_spip('prive/formulaires/dater');
-	$date_debut = dater_recuperer_date_saisie(_request('date_debut'));
-	set_request('date_debut',sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], '00', '00'));
-	
-	$date_fin = dater_recuperer_date_saisie(_request('date_fin'));
-	set_request('date_fin',sql_format_date($date_fin[0], $date_fin[1], $date_fin[2], '00', '00'));
+ 	$date_debut = dater_recuperer_date_saisie(_request('date_debut'));
+ 	set_request('date_debut',sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], '00', '00'));
 
-
+ 	$date_fin = dater_recuperer_date_saisie(_request('date_fin'));
+ 	set_request('date_fin',sql_format_date($date_fin[0], $date_fin[1], $date_fin[2], '00', '00'));
 	return formulaires_editer_objet_verifier('spectacle',$id_spectacle, array('titre'));
 }
 
