@@ -2,7 +2,7 @@
 
 /**
  *  Fichier généré par la Fabrique de plugin v5
- *   le 2013-01-28 17:30:35
+ *   le 2013-02-01 11:44:30
  *
  *  Ce fichier de sauvegarde peut servir à recréer
  *  votre plugin avec le plugin «Fabrique» qui a servi à le créer.
@@ -157,36 +157,6 @@ $data = array (
           ),
           'recherche' => '',
           'saisie' => 'input',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
-        5 => 
-        array (
-          'nom' => 'Date de début',
-          'champ' => 'date_debut',
-          'sql' => 'datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'',
-          'caracteristiques' => 
-          array (
-            0 => 'editable',
-            1 => 'versionne',
-          ),
-          'recherche' => '6',
-          'saisie' => 'date',
-          'explication' => '',
-          'saisie_options' => '',
-        ),
-        6 => 
-        array (
-          'nom' => 'Date de fin',
-          'champ' => 'date_fin',
-          'sql' => 'datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\'',
-          'caracteristiques' => 
-          array (
-            0 => 'editable',
-            1 => 'versionne',
-          ),
-          'recherche' => '6',
-          'saisie' => 'date',
           'explication' => '',
           'saisie_options' => '',
         ),

@@ -4,7 +4,7 @@
 	[(#AUTORISER{creer,spectacle}|sinon_interdire_acces)]
 ]
  
-#SET{redirect,#ENV{redirect}|sinon{#ID_SPECTACLE|?{#ID_SPECTACLE|generer_url_entite{spectacle},#URL_ECRIRE{spectacles}}}}
+#SET{redirect,#ENV{redirect}|sinon{ #ID_SPECTACLE|?{#ID_SPECTACLE|generer_url_entite{spectacle},#URL_ECRIRE{spectacles} }}}
 
 <div class='cadre-formulaire-editer'>
 <div class="entete-formulaire">
@@ -18,16 +18,13 @@
 </div>
 
 #SET{redirect,#ENV{redirect,#ID_SPECTACLE|generer_url_entite{spectacle}}}
-
-
+[(#ENV{retourajax,''}|oui)
+	#SET{redirect,'javascript:if (window.jQuery) jQuery(".entete-formulaire .retour a").followLink();'}
 	<div class="ajax">
-		[(#FORMULAIRE_EDITER_SPECTACLE{#ENV{id_spectacle,oui}, #GET{redirect}, #ENV{associer_objet}})]
+]
+		[(#FORMULAIRE_EDITER_SPECTACLE{#ENV{id_spectacle,oui}, #URL_ECRIRE{lier_evenement}, #ENV{associer_objet}})]
+[(#ENV{retourajax,''}|oui)
 	</div>
-	
-	<div class="ajax">
-		[(#FORMULAIRE_EDITER_EVENEMENT)]
-	</div>
-	
 	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('#ENV{exec}');/*\]\]>*/</script>
-
+]
 </div>

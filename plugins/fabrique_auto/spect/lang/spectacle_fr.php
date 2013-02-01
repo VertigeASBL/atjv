@@ -19,8 +19,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'label_auteur_spect' => 'Auteur',
-	'label_date_debut' => 'Date de début',
-	'label_date_fin' => 'Date de fin',
 	'label_description' => 'Description',
 	'label_lieu' => 'Lieu',
 	'label_metteur_en_scene' => 'Metteur en scène',

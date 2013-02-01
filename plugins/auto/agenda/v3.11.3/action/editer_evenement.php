@@ -94,6 +94,7 @@ function evenement_modifier($id_evenement, $set=null){
 
 	include_spip('inc/modifier');
 	include_spip('inc/filtres');
+
 	$c = collecter_requests(
 		// white list
 		objet_info('evenement','champs_editables'),
@@ -111,6 +112,7 @@ function evenement_modifier($id_evenement, $set=null){
 		$indexation = true;
 	}
 
+
 	if ($err = objet_modifier_champs('evenement', $id_evenement,
 		array(
 			'nonvide' => array('titre' => _T('info_nouvel_evenement')." "._T('info_numero_abbreviation').$id_evenement),
@@ -118,7 +120,7 @@ function evenement_modifier($id_evenement, $set=null){
 			'indexation' => $indexation,
 		),
 		$c))
-		return $err;
+		return $err;	
 
 	if (!is_null($repetitions = _request('repetitions',$set)))
 		agenda_action_revision_evenement_repetitions($id_evenement,$repetitions);

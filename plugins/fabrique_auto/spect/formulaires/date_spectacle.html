@@ -1,0 +1,19 @@
+<div class="formulaire_spip formulaire_#FORM">
+ 
+[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+ 
+<form action="#ENV{action}" method="post">
+    #ACTION_FORMULAIRE{#ENV{action}}
+    <ul>
+    	[(#SAISIE{date, date_debut,
+				label=Date de début,
+				explication=Date de début du spectable, horaire=oui})]
+				
+		[(#SAISIE{date, date_fin,
+				label=Date de fin,
+				explication=Date de fin du spectable, horaire=oui})]
+    </ul>
+    <p class="boutons"><input type="submit" class="submit" value="<:pass_ok:>" /></p>
+</form>
+</div>
