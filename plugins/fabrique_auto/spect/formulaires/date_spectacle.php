@@ -28,29 +28,27 @@ function formulaires_date_spectacle_traiter_dist($id_spectacle) {
 	/* on fait une date correct. */
 	include_spip('prive/formulaires/dater');
 
-	$date_debut = dater_recuperer_date_saisie(_request('date_debut')['date'].' '._request('date_debut')['heure'].':00');
-	$date_debut = sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], '00', '00');
+	/* Avec les fonctions "dater" on va générer des dates corrects à insérer dans la base de donnée. */
+	$date_debut = array_merge(dater_recuperer_date_saisie(_request('date_debut')['date']), dater_recuperer_heure_saisie(_request('date_debut')['heure']));
+	$date_debut = sql_format_date($date_debut[0], $date_debut[1], $date_debut[2], $date_debut[3], $date_debut[4]);
 
-	$date_fin = dater_recuperer_date_saisie(_request('date_fin')['date'].' '._request('date_fin')['heure'].':00');
-	$date_fin = sql_format_date($date_fin[0], $date_fin[1], $date_fin[2], '00', '00');
-
-	echo '<pre>';
-	var_dump($date_debut);
-	echo '</pre>';
-
-	echo '<pre>';
-	var_dump($date_fin);
-	echo '</pre>';
+	$date_fin = array_merge(dater_recuperer_date_saisie(_request('date_fin')['date']), dater_recuperer_heure_saisie(_request('date_fin')['heure']));
+	$date_fin = sql_format_date($date_fin[0], $date_fin[1], $date_fin[2], $date_fin[3], $date_fin[4]);
 
 	/* On créer l'événement dans la base de donnée. */
 	$id_event = evenement_inserer(1, 'evenement');
 
+	/* On modifier l'événement et on récupère les éventuelle erreur. */
 	$err = evenement_modifier($id_event, 
 		array(
 			'titre' => 'test',
 			'date_debut' => $date_debut,
 			'date_fin' => $date_fin
 			));
+
+	echo '<pre>';
+	var_dump($err);
+	echo '</pre>';
 
     // message
 	return array(
